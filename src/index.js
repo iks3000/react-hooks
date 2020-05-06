@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 
@@ -19,30 +19,66 @@ const App = () => {
   }
 };
 
-const loading = (
-  <div class="spinner-border spinner-border-sm text-success" role="status">
-    <span class="sr-only">Loading...</span>
+const spinner = (
+  <div className="spinner-border spinner-border-sm text-success" role="status">
+    <span className="sr-only">Loading...</span>
   </div>
 )
 
-const usePlanetInfo = (id) => {
-  const [planet, setPlanet] = useState(loading)
+const getPlanet = (id) => {
+  return fetch(`https://swapi.dev/api/planets/${ id }`)
+    .then(res => res.json())
+    .then(data => data);
+}
+
+const useRequest = (request) => {
+  const initialState = useMemo(() => ({
+    data: null,
+    loading: true,
+    error: null
+  }), []);
+
+  const [dataState, setDataState] = useState(initialState)
 
   useEffect(() => {
-    let cancelled = false;
-    fetch(`https://swapi.dev/api/planets/${ id }`)
-      .then(res => res.json())
-      .then(data => !cancelled && setPlanet(data.name));
-    return () => cancelled = true;
-  }, [id]);
+    setDataState(initialState);
 
-  return planet;
+    let cancelled = false;
+    request()
+      .then(data => !cancelled && setDataState({
+        data,
+        loading: false,
+        error: null
+      }))
+      .catch(error => !cancelled && setDataState({
+        data: null,
+        loading: false,
+        error
+      }));
+    return () => cancelled = true;
+  }, [request, initialState]);
+
+  return dataState;
+}
+
+const usePlanetInfo = (id) => {
+  const req = useCallback(() => getPlanet(id), [ id ]);
+  return useRequest(req);
 }
 
 const PlanetInfo = ({ id }) => {
-  const namePlanet = usePlanetInfo(id);
+  const { data, loading, error } = usePlanetInfo(id);
+
+  if (error) {
+    return <div className="mt-3">Somthing is wrong</div>
+  }
+
+  if (loading) {
+    return <div className="mt-3">{spinner}</div>
+  }
+
   return (
-    <div className="mt-3">{id} - {namePlanet}</div>
+    <div className=" mt-3">{id} - {data.name}</div>
   )
 }
 
