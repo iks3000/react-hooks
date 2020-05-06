@@ -19,14 +19,13 @@ const App = () => {
   }
 };
 
-const PlanetInfo = ({ id }) => {
+const loading = (
+  <div class="spinner-border spinner-border-sm text-success" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+)
 
-  const loading = (
-    <div class="spinner-border spinner-border-sm text-success" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  )
-
+const usePlanetInfo = (id) => {
   const [planet, setPlanet] = useState(loading)
 
   useEffect(() => {
@@ -35,12 +34,15 @@ const PlanetInfo = ({ id }) => {
       .then(res => res.json())
       .then(data => !cancelled && setPlanet(data.name));
     return () => cancelled = true;
-  }, [id])
+  }, [id]);
 
+  return planet;
+}
 
-
+const PlanetInfo = ({ id }) => {
+  const namePlanet = usePlanetInfo(id);
   return (
-    <div className="mt-3">{id} - {planet}</div>
+    <div className="mt-3">{id} - {namePlanet}</div>
   )
 }
 
