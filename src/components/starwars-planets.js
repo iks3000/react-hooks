@@ -61,7 +61,7 @@ const spinner = (
 )
 
 const getPlanet = (id) => {
-  return fetch(`https://swapi.dev/api/planets/${ id }`)
+  return fetch(`https://swapi.dev/api/planets/${ id }/`)
     .then(res => res.json())
     .then(data => data);
 }
