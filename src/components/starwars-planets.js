@@ -60,10 +60,10 @@ const spinner = (
   </div>
 )
 
-const getPlanet = (id) => {
-  return fetch(`https://swapi.dev/api/planets/${ id }/`)
-    .then(res => res.json())
-    .then(data => data);
+const getPlanet = async (id) => {
+  const res = await fetch(`https://swapi.dev/api/planets/${ id }/`);
+  const data = await res.json();
+  return data;
 }
 
 const useRequest = (request) => {
