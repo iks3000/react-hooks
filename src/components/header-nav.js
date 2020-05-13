@@ -3,9 +3,6 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 const HeaderNav = () => {
-
-  //const [active, setActive] = useState(false);
-
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link className="navbar-brand" to="/react-hooks">Hooks |</Link>

@@ -48,16 +48,7 @@ const AppStarWarsPlanets = () => {
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
     </>
-
   )
 };
 
