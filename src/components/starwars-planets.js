@@ -105,7 +105,7 @@ const PlanetInfo = ({ id }) => {
   const { data, loading, error } = usePlanetInfo(id);
 
   if (error) {
-    return <div className="mt-3">Somthing is wrong</div>
+    return <div className="mt-3">Something is wrong</div>
   }
 
   if (loading) {

@@ -178,7 +178,7 @@ export const codeStringStarWarsPlanet = `
   const getPlanet = (id) => {
     return fetch(\`${link}\`)
       .then(res => res.json())
-    .then(data => data);
+      .then(data => data);
   }
 
   const useRequest = (request) => {
