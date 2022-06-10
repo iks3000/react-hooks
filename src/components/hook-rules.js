@@ -16,14 +16,13 @@ const HookRules = () => {
     <>
       <div className="d-flex justify-content-between mb-4">
         <div className="card text-white bg-dark d-inline-flex" style={{width: "25rem"}}>
-          <div className="card-header">Правила и ограничения хуков:</div>
+          <div className="card-header">Rules of Hooks:</div>
           <div className="card-body">
             <ul className="card-text pl-3">
-              <li>Хуки нельзя использовать в циклах и условиях</li>
-              <li>Хуки можно использовать только в React компонентах т в других хуках</li>
-              <li>Хуки нельзя использовать в классах</li>
-              <li>Не все возможности React можно реализоватьпри помощи хуков (например,
-              componentDidCatch() работает только в классах)</li>
+              <li>Only Call Hooks at the Top Level</li>
+              <li>Don’t call Hooks inside loops, conditions, or nested functions. Instead, always use Hooks at the top level of your React function. By following this rule, you ensure that Hooks are called in the same order each time a component renders. That’s what allows React to correctly preserve the state of Hooks between multiple useState and useEffect calls</li>
+              <li>Only Call Hooks from React Functions</li>
+              <li>Don’t call Hooks from regular JavaScript functions.</li>
             </ul>
           </div>
         </div>
